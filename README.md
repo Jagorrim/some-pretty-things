@@ -1,1 +1,1 @@
-i keep here my little programs that i sometime write
+i keep here my little programs which i sometimes write
