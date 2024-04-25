@@ -24,6 +24,8 @@ class DataTree:
             cur_level = cur_level[string[cur_item_index]]
             cur_item_index += 1
 
+        cur_level['is_end'] = True
+
     def delete(self, string: str) -> None:
         # deleting item from tree
         levels = [self.__data]
@@ -37,7 +39,7 @@ class DataTree:
             if string[cur_item_index] not in cur_level:
                 raise ValueError(f'Tree {self} does not contain {string}!')
 
-            if len(cur_level[string[cur_item_index]]) == 0:
+            if len(cur_level[string[cur_item_index]]) == 1 and 'is_end' in cur_level[string[cur_item_index]]:
                 is_string_seq_end = True
                 break
 
@@ -46,8 +48,15 @@ class DataTree:
             cur_item_index += 1
 
         if is_string_seq_end:
+            end_counter = 0
+
             for index in range(len(string) - 1, -1, -1):
-                if len(levels[index][string[index]]) == 0:
+                if len(levels[index][string[index]]) == 1 \
+                        and 'is_end' in levels[index][string[index]] \
+                        and end_counter == 0:
+                    end_counter += 1
+                    del levels[index][string[index]]
+                elif len(levels[index][string[index]]) == 0:
                     del levels[index][string[index]]
                 else:
                     break
@@ -74,7 +83,8 @@ class DataTree:
             cur_level = cur_level[string[cur_item_index]]
             cur_item_index += 1
 
-        return True
+        if 'is_end' in cur_level:
+            return True
 
     def __delitem__(self, key) -> None:
         self.delete(key)
@@ -86,6 +96,7 @@ if __name__ == '__main__':
     from pprint import pprint
     from time import time
     from random import randrange
+
 
     max_num = 1_000_000_0
 
@@ -118,10 +129,13 @@ if __name__ == '__main__':
     print(f'tree_time: {tree_time}')
     print(f'list_time: {list_time}')
 
-    # tree.add('pupup')
-    # tree.add('puaaaa')
-    # pprint(tree.get_tree())
-    # tree.delete('pupup')
-    # pprint(tree.get_tree())
-    # tree.add('tadam')
-    # pprint(tree.get_tree())
+    # tree = DataTree()
+    #
+    # tree.add('DADADAD')
+    # print(tree.get_tree())
+    # tree.add('DADADADA')
+    # print(tree.get_tree())
+    # print('DADADADA' in tree)
+    # tree.delete('DADADADA')
+    # print(tree.get_tree())
+    # print('DADADADA' in tree)
