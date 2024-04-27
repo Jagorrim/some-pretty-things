@@ -1,4 +1,6 @@
 from copy import deepcopy
+from typing import Iterable
+from collections import deque
 
 
 class DataTree:
@@ -6,6 +8,7 @@ class DataTree:
     # It's actually scalable to be structure for any collection of hashable elements
     def __init__(self) -> None:
         self.__data = {}
+        self.string_count = 0
 
     def get_tree(self) -> dict:
         # returns deepcopy of tree
@@ -13,6 +16,9 @@ class DataTree:
 
     def add(self, string: str) -> None:
         # adding new string to tree
+
+        if len(string) == 0:
+            raise ValueError('Zero string can not be added to DataTree!')
 
         cur_level = self.__data
 
@@ -24,6 +30,7 @@ class DataTree:
         if 'end_for' not in cur_level:
             cur_level['end_for'] = 0
         cur_level['end_for'] += 1
+        self.string_count += 1
 
     def delete(self, string: str) -> None:
         # deleting string from tree
@@ -40,10 +47,12 @@ class DataTree:
         # if this level is end for many strings
         if 'end_for' in cur_level and cur_level['end_for'] > 1:
             cur_level['end_for'] -= 1
+            self.string_count -= 1
 
         # if this level is end for only one string, but there are strings that longer than it
         elif 'end_for' in cur_level and cur_level['end_for'] == 1 and len(cur_level) > 1:
             del cur_level['end_for']
+            self.string_count -= 1
 
         # if this level is end for only one string and there are no string that longer than it
         elif 'end_for' in cur_level and cur_level['end_for'] == 1 and len(cur_level) == 1:
@@ -59,6 +68,23 @@ class DataTree:
                     del levels[index][string[index]]
                 else:
                     break
+            self.string_count -= 1
+
+    def get_all_strings(self) -> Iterable[str]:
+        queue = deque([([], self.__data)])
+        while queue:
+            cur_seq, items = queue.popleft()
+
+            if 'end_for' in items:
+                for _ in range(items['end_for']):
+                    yield ''.join(cur_seq)
+
+            for item in items:
+                if item == 'end_for':
+                    continue
+
+                # if in this level we have end of any strings
+                queue.append((cur_seq + [item], items[item]))
 
     def __repr__(self):
         return f'DataTree<id={id(self)}>'
@@ -85,6 +111,9 @@ class DataTree:
 
     def __delitem__(self, key) -> None:
         self.delete(key)
+
+    def __len__(self):
+        return self.string_count
 
 
 if __name__ == '__main__':
@@ -127,28 +156,34 @@ if __name__ == '__main__':
     # print(f'list_time: {list_time}')
 
     tree = DataTree()
+    print(tree.get_tree())
 
     tree.add('abc')
     tree.add('abcdeee')
     tree.add('abcdeee')
+    tree.add('ffff')
+    tree.add('dgbmgkbhm kgnmgjn cgfkjngfm kn gfnkofgjkpv jkpxfb dfkovbeoav,')
     tree.add('abcdeee')
+    for i in tree.get_all_strings():
+        print(i)
 
-    tree.add('abcdeee')
-
-    tree.add('abcd')
-    print('abcdeee' in tree)
-    print('ab' in tree)
-
-    print(tree.get_tree())
-    del tree['abcdeee']
-    print(tree.get_tree())
-    del tree['abcdeee']
-    print(tree.get_tree())
-    del tree['abcdeee']
-    print(tree.get_tree())
-    del tree['abcdeee']
-    print(tree.get_tree())
-    del tree['abcd']
-    print(tree.get_tree())
-    del tree['abc']
-    print(tree.get_tree())
+    # print(len(tree))
+    # tree.add('abcdeee')
+    #
+    # tree.add('abcd')
+    # print('abcdeee' in tree)
+    # print('ab' in tree)
+    #
+    # print(tree.get_tree())
+    # del tree['abcdeee']
+    # print(tree.get_tree())
+    # del tree['abcdeee']
+    # print(tree.get_tree())
+    # del tree['abcdeee']
+    # print(tree.get_tree())
+    # del tree['abcdeee']
+    # print(tree.get_tree())
+    # del tree['abcd']
+    # print(tree.get_tree())
+    # del tree['abc']
+    # print(tree.get_tree())
