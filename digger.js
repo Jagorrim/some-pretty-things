@@ -5,6 +5,8 @@ mineflayer = require('mineflayer')
 pathfinder = require('mineflayer-pathfinder').pathfinder
 v = require('vec3')
 GoalNear = require('mineflayer-pathfinder').goals.GoalNear
+GoalFollow = require('mineflayer-pathfinder').goals.GoalFollow
+GoalBlock = require('mineflayer-pathfinder').goals.GoalBlock
 AutoAuth = require('mineflayer-auto-auth')
 toolplugin = require('mineflayer-tool').plugin
 mineflayerViewer = require('prismarine-viewer').mineflayer
@@ -43,7 +45,7 @@ function getCuboid(v1, v2) {
 
 const bot = mineflayer.createBot({
     host: 'localhost',
-    port: 62784,
+    port: 28973,
     username: 'durashka',
     plugins: [AutoAuth, pathfinder, toolplugin],
     auth: 'offline',
@@ -66,9 +68,6 @@ async function dig(v1, v2) {
         if (specify_blocks.includes(block.type)) {
             continue
         }
-        movements = new Movements(bot, mcData);
-
-        bot.pathfinder.setMovements(movements);
         bot.pathfinder.setGoal(new GoalNear(pos.x, pos.y, pos.z, 3));
 
         while (true) {
@@ -84,8 +83,8 @@ async function dig(v1, v2) {
     }
 }
 
-async function go(v) {
-    await bot.pathfinder.goto(new GoalNear(v.x, v.y, v.z, 1))
+async function go(player) {
+    bot.pathfinder.setGoal(new GoalFollow(player, 3));
 }
 
 // async function place_blocks(v1, v2) {
@@ -185,7 +184,7 @@ bot.on('whisper', async function (sender, message) {
             bot.chat(`/warp ${message[2]}`)
         } else if (message[1] == 'go') {
             // no args
-            go(bot.players[sender].entity.position)
+            go(bot.players[sender].entity)
 
         }
     }
