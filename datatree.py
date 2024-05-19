@@ -123,9 +123,10 @@ if __name__ == '__main__':
     from time import time
     from random import randrange
 
-    #
-    # max_num = 1_000_000_0
-    #
+    max_num = 10_000_000
+
+    # testing of searching:
+    # print('search:')
     # lst = [str(i) for i in range(0, max_num)]
     #
     # tree = DataTree()
@@ -139,33 +140,64 @@ if __name__ == '__main__':
     # test_count = 1000
     #
     # for _ in range(test_count):
-    #     num_to_search = randrange(0, max_num)
+    #     num_to_search = str(randrange(max_num - 1000, max_num))
     #
     #     start1 = time()
-    #     res1 = str(num_to_search) in lst
+    #     res1 = num_to_search in lst
     #     finish1 = time()
     #     # print(res1, finish1 - start1)
     #     list_time += (finish1 - start1)
     #
     #     start2 = time()
-    #     res2 = str(num_to_search) in tree
+    #     res2 = num_to_search in tree
     #     finish2 = time()
     #     # print(res2, finish2 - start2)
     #     tree_time += (finish2 - start2)
     # print(f'tree_time: {tree_time}')
     # print(f'list_time: {list_time}')
 
-    tree = DataTree()
-    print(tree.get_tree())
+    # testing of adding:
+    print('adding:')
+    max_num = 1_000_000_000_000_000_000_00
+    lst = []
 
-    tree.add('abc')
-    tree.add('abcdeee')
-    tree.add('abcdeee')
-    tree.add('ffff')
-    tree.add('dgbmgkbhm kgnmgjn cgfkjngfm kn gfnkofgjkpv jkpxfb dfkovbeoav,')
-    tree.add('abcdeee')
-    for i in tree.get_all_strings():
-        print(i)
+    tree = DataTree()
+
+    tree_time = 0
+    list_time = 0
+
+    test_count = 10000
+
+    for _ in range(test_count):
+        num_to_add = str(randrange(max_num - 1000, max_num))
+
+        start1 = time()
+        lst.append(num_to_add)
+        finish1 = time()
+        # print(res1, finish1 - start1)
+        list_time += (finish1 - start1)
+
+        start2 = time()
+        tree.add(num_to_add)
+        finish2 = time()
+        # print(res2, finish2 - start2)
+        tree_time += (finish2 - start2)
+    print(f'tree_time: {tree_time}')
+    print(f'list_time: {list_time}')
+
+    # testing of working:
+    #
+    # tree = DataTree()
+    # print(tree.get_tree())
+    #
+    # tree.add('abc')
+    # tree.add('abcdeee')
+    # tree.add('abcdeee')
+    # tree.add('ffff')
+    # tree.add('dgbmgkbhm kgnmgjn cgfkjngfm kn gfnkofgjkpv jkpxfb dfkovbeoav,')
+    # tree.add('abcdeee')
+    # for i in tree.get_all_strings():
+    #     print(i)
 
     # print(len(tree))
     # tree.add('abcdeee')
