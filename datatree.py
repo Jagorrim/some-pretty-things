@@ -126,64 +126,69 @@ if __name__ == '__main__':
     max_num = 10_000_000
 
     # testing of searching:
-    # print('search:')
-    # lst = [str(i) for i in range(0, max_num)]
+    print('search:')
+    start = time()
+
+    string_list = [str(i) for i in range(0, max_num)]
+
+    tree = DataTree()
+    for i in string_list:
+        tree.add(i)
+
+    hash_list = [hash(i) for i in string_list]
+
+    tree_time = 0
+    string_list_time = 0
+    hash_list_time = 0
+
+    test_count = 1000
+    print(f'preparing time: {time() - start}')
+    for _ in range(test_count):
+        num_to_search = str(randrange(max_num - 1000, max_num))
+
+        start = time()
+        res1 = num_to_search in string_list
+        string_list_time += (time() - start)
+
+        start = time()
+        res2 = num_to_search in tree
+        tree_time += (time() - start)
+
+        start = time()
+        res3 = hash(num_to_search) in hash_list
+        hash_list_time += (time() - start)
+    print(f'tree_time: {tree_time}')
+    print(f'string_list_time: {string_list_time}')
+    print(f'hash_list_time: {hash_list_time}')
+
+    # # testing of adding:
+    # print('adding:')
+    # max_num = 1_000_000_000_000_000_000_00
+    # lst = []
     #
     # tree = DataTree()
-    #
-    # for i in lst:
-    #     tree.add(i)
     #
     # tree_time = 0
     # list_time = 0
     #
-    # test_count = 1000
+    # test_count = 10000
     #
     # for _ in range(test_count):
-    #     num_to_search = str(randrange(max_num - 1000, max_num))
+    #     num_to_add = str(randrange(max_num - 1000, max_num))
     #
     #     start1 = time()
-    #     res1 = num_to_search in lst
+    #     lst.append(num_to_add)
     #     finish1 = time()
     #     # print(res1, finish1 - start1)
     #     list_time += (finish1 - start1)
     #
     #     start2 = time()
-    #     res2 = num_to_search in tree
+    #     tree.add(num_to_add)
     #     finish2 = time()
     #     # print(res2, finish2 - start2)
     #     tree_time += (finish2 - start2)
     # print(f'tree_time: {tree_time}')
     # print(f'list_time: {list_time}')
-
-    # testing of adding:
-    print('adding:')
-    max_num = 1_000_000_000_000_000_000_00
-    lst = []
-
-    tree = DataTree()
-
-    tree_time = 0
-    list_time = 0
-
-    test_count = 10000
-
-    for _ in range(test_count):
-        num_to_add = str(randrange(max_num - 1000, max_num))
-
-        start1 = time()
-        lst.append(num_to_add)
-        finish1 = time()
-        # print(res1, finish1 - start1)
-        list_time += (finish1 - start1)
-
-        start2 = time()
-        tree.add(num_to_add)
-        finish2 = time()
-        # print(res2, finish2 - start2)
-        tree_time += (finish2 - start2)
-    print(f'tree_time: {tree_time}')
-    print(f'list_time: {list_time}')
 
     # testing of working:
     #
