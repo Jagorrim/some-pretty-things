@@ -173,13 +173,46 @@ class Heap:
         return len(self.__heap)
 
 
+def heap_sort(items: Iterable[Any], reverse=False) -> list[Any]:
+    heap = Heap(items, _max=reverse)
+    sorted_items = []
+    for _ in range(len(heap)):
+        if not reverse:
+            sorted_items.append(heap.pop_min())
+        else:
+            sorted_items.append(heap.pop_max())
+    return sorted_items
+
+
 # tests
 if __name__ == '__main__':
+    from random import randrange
+    from time import time
+    # heap tests:
     heap = Heap([0, 0, 1, 1, 0, 0, 9])
     print(heap)
     del heap[0]
     print()
     print(heap)
+
+    # heap-sort tests:
+    array = [1, 7, 4, -1, 5, 1, 2, 3]
+    array = heap_sort(array, reverse=True)
+    print(array)
+
+    nums = [randrange(1, 10001) for i in range(10000)]
+    _nums1 = nums.copy()
+    _nums2 = nums.copy()
+
+    start1 = time()
+    _nums1 = sorted(_nums1)
+    print(f'time for built-in sort: {time() - start1}')
+
+    start2 = time()
+    _nums2 = heap_sort(_nums2)
+    print(f'time for heap-sort: {time() - start2}')
+
+
     #   0
     #  1 2
     # 3 4 5 6
