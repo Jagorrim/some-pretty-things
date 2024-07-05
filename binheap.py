@@ -122,12 +122,12 @@ class Heap:
 
     def pop_max(self) -> Any:
         if not self.__max:
-            raise ValueError("This heap isn't max heap!")
+            raise TypeError("This heap isn't max heap!")
         return self.__pop()
 
     def pop_min(self) -> Any:
         if self.__max:
-            raise ValueError("This heap isn't min heap!")
+            raise TypeError("This heap isn't min heap!")
 
         return self.__pop()
 
