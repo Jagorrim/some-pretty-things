@@ -27,7 +27,7 @@ class Heap:
             return
 
         # build heap
-        max_index = 2 ** (depth - 2)  # depth - 2 is penultimate layer
+        max_index = 2 ** (depth - 1) - 2  # depth - 2 is penultimate layer
         for cur_index in range(max_index, -1, -1):
             self.__sift_down(cur_index)
 
@@ -128,7 +128,6 @@ class Heap:
     def pop_min(self) -> Any:
         if self.__max:
             raise TypeError("This heap isn't min heap!")
-
         return self.__pop()
 
     def get_depth(self) -> int:
@@ -189,28 +188,31 @@ if __name__ == '__main__':
     from random import randrange
     from time import time
     # heap tests:
-    heap = Heap([0, 0, 1, 1, 0, 0, 9])
-    print(heap)
-    del heap[0]
-    print()
-    print(heap)
+    # heap = Heap([0, 0, 1, 1, 0, 0, 9])
+    # print(heap)
+    # del heap[0]
+    # print()
+    # print(heap)
 
     # heap-sort tests:
-    array = [1, 7, 4, -1, 5, 1, 2, 3]
-    array = heapsort(array, reverse=True)
+    array = [randrange(1, 11) for i in range(100)]
+    print(Heap(array))
+    print(array)
+    array = heapsort(array)
     print(array)
 
-    nums = [randrange(1, 10001) for i in range(10000)]
-    _nums1 = nums.copy()
-    _nums2 = nums.copy()
-
-    start1 = time()
-    _nums1 = sorted(_nums1)
-    print(f'time for built-in sort: {time() - start1}')
-
-    start2 = time()
-    _nums2 = heapsort(_nums2)
-    print(f'time for heap-sort: {time() - start2}')
+    # nums = [randrange(1, 10001) for i in range(10000)]
+    # _nums1 = nums.copy()
+    # _nums2 = nums.copy()
+    #
+    # start1 = time()
+    # _nums1 = sorted(_nums1)
+    # print(f'time for built-in sort: {time() - start1}')
+    #
+    # start2 = time()
+    # _nums2 = heapsort(_nums2)
+    # print(f'time for heap-sort: {time() - start2}')
+    # print(len(_nums1) == len(_nums2))
 
 
     #   0
