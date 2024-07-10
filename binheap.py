@@ -173,7 +173,7 @@ class Heap:
         return len(self.__heap)
 
 
-def heap_sort(items: Iterable[Any], reverse=False) -> list[Any]:
+def heapsort(items: Iterable[Any], reverse=False) -> list[Any]:
     heap = Heap(items, _max=reverse)
     sorted_items = []
     for _ in range(len(heap)):
@@ -197,7 +197,7 @@ if __name__ == '__main__':
 
     # heap-sort tests:
     array = [1, 7, 4, -1, 5, 1, 2, 3]
-    array = heap_sort(array, reverse=True)
+    array = heapsort(array, reverse=True)
     print(array)
 
     nums = [randrange(1, 10001) for i in range(10000)]
@@ -209,7 +209,7 @@ if __name__ == '__main__':
     print(f'time for built-in sort: {time() - start1}')
 
     start2 = time()
-    _nums2 = heap_sort(_nums2)
+    _nums2 = heapsort(_nums2)
     print(f'time for heap-sort: {time() - start2}')
 
 
