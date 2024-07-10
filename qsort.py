@@ -68,6 +68,7 @@ def _qsort(data: list) -> list:
     return _qsort(less) + [base_elem] + _qsort(greater)
 
 
+# this is main function, pls don't use another
 def qsort(data: list) -> list:
     if len(data) == 0 or len(data) == 1:
         return data
