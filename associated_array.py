@@ -1,5 +1,6 @@
 from typing import Any, Hashable
 from collections.abc import Iterator
+from copy import deepcopy
 
 
 # STRUCTURE OF ITEMS IN __array:
@@ -11,7 +12,7 @@ from collections.abc import Iterator
 
 class AArray1:
     def __init__(self, max_nested_len: int = 5) -> None:
-        self.set_start()
+        self.__set_start()
         if max_nested_len < 5:
             raise ValueError(f'max_nested_len must be greater than or equal to 5')
         self.__max_nested_len = max_nested_len
@@ -172,6 +173,12 @@ class AArray1:
     def clear(self) -> None:
         self.__set_start()
 
+    def copy(self) -> "AArray1":
+        new = AArray1(max_nested_len=self.__max_nested_len)
+        new._AArray1__len = self.__len
+        new._AArray1__array = deepcopy(self.__array)
+        return new
+
     def __extend(self, all_items: list[Any]) -> None:
         array = [None] * len(self.__array) * 2
         for item in all_items:
@@ -202,9 +209,10 @@ class AArray1:
 # tests
 if __name__ == '__main__':
     t = AArray1()
-    t[1] = None
+    t[1] = [5]
     print(t)
-    print(t.setdefault(2, 5))
+    t2 = t.copy()
+    print(t2)
+    t[1][0] = 2
     print(t)
-    t.clear()
-    print(t)
+    print(t2)
