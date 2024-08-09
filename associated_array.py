@@ -11,8 +11,7 @@ from collections.abc import Iterator
 
 class AArray1:
     def __init__(self, max_nested_len: int = 5) -> None:
-        self.__len = 0
-        self.__array = [None] * 100  # start size of array
+        self.set_start()
         if max_nested_len < 5:
             raise ValueError(f'max_nested_len must be greater than or equal to 5')
         self.__max_nested_len = max_nested_len
@@ -101,6 +100,10 @@ class AArray1:
 
         return _items
 
+    def __set_start(self) -> None:
+        self.__len = 0
+        self.__array = [None] * 100  # start size of array
+
     def keys(self) -> Iterator[Any]:
         for i in self.__array:
             if i is None:
@@ -166,6 +169,9 @@ class AArray1:
 
             return default
 
+    def clear(self) -> None:
+        self.__set_start()
+
     def __extend(self, all_items: list[Any]) -> None:
         array = [None] * len(self.__array) * 2
         for item in all_items:
@@ -199,4 +205,6 @@ if __name__ == '__main__':
     t[1] = None
     print(t)
     print(t.setdefault(2, 5))
+    print(t)
+    t.clear()
     print(t)
