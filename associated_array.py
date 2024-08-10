@@ -92,6 +92,20 @@ class AArray1:
         else:
             raise KeyError(key)
 
+    def __contains__(self, key: Hashable) -> bool:
+        full_hash = hash(key)
+        scope_hash = full_hash % len(self.__array)
+
+        scope = self.__array[scope_hash]
+        if scope is None:
+            return False
+
+        for i in scope:
+            if i[0] == full_hash and i[1] == key:
+                return True
+
+        return False
+
     def __get_all_items(self) -> list[Any]:
         _items = []
         for i in self.__array:
@@ -209,10 +223,5 @@ class AArray1:
 # tests
 if __name__ == '__main__':
     t = AArray1()
-    t[1] = [5]
-    print(t)
-    t2 = t.copy()
-    print(t2)
-    t[1][0] = 2
-    print(t)
-    print(t2)
+    t['1'] = [5]
+    print('1' in t)
