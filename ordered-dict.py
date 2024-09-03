@@ -1,3 +1,5 @@
+# upd: wtf did i really do something like that??
+
 class OrderedDict:
     def __init__(self, get_object=None):
         self.order = []
