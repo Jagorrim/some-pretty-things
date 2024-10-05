@@ -212,7 +212,7 @@ class ArithmeticExpression(MathExpression):
 
         return ''.join(raw_expression)
 
-
+# У меня не было времени на придумывании нормальной генерации уравнения, а сейчас уже лень :(
 class Equation(MathExpression):
     def __init__(self, complexity: int = 1):
         super().__init__(complexity=complexity)
