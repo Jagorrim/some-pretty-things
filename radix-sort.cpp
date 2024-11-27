@@ -39,7 +39,7 @@ signed main() {
     }
     for (string &j: raw_nums) {
         is_started = 0;
-        for (char j2: j) {
+        for (char &j2: j) {
             if (j2 == '0' && is_started == 0) {
                 continue;
             } else {
