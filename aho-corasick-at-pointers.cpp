@@ -14,25 +14,22 @@ struct Vertex {
     int end_count = 0, id;
     Vertex *parent;
 
-    Vertex(char letter, Vertex *parent, vector<Vertex *> &pointers) {
+    Vertex(char letter, Vertex *parent) {
         this->letter = letter;
         this->parent = parent;
         this->id = ::id++;
-        pointers.push_back(this);
-
     }
 
     ~Vertex() = default;
 
 };
 
-vector<Vertex *> pointers;
 const int N = ((int) 1e6) + 10;
 // обычные ссылки и сжатые
 array<Vertex *, N> l, L;
 // переходы для поиска хз
 array<array<Vertex *, letters_count>, N> d;
-Vertex root('!', nullptr, pointers);
+Vertex root('!', nullptr);
 
 struct Func {
     Vertex *l_func(Vertex *v) {
@@ -78,13 +75,14 @@ struct Func {
 
 };
 
+int total_count = 0;
 
 void add_to_bor(string &s, int string_id) {
     Vertex *cur_pose = &root;
     for (int i = 0; i < s.size(); ++i) {
         char c = s[i];
         if (cur_pose->next[c - 'a'] == nullptr) {
-            cur_pose->next[c - 'a'] = new Vertex(c, cur_pose, pointers);
+            cur_pose->next[c - 'a'] = new Vertex(c, cur_pose);
             cur_pose->next[c - 'a']->layer = cur_pose->layer + 1;
         }
         cur_pose = (cur_pose->next[c - 'a']);
@@ -211,6 +209,5 @@ int main() {
 //Третья:
 //- А мне нравится рекурсия.
 //Тут поезд резко тормозит, и с верхней полки падает купе с тремя девушками.
-
 
 
