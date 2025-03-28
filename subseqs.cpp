@@ -1,4 +1,4 @@
-// task - https://ejudge.algocode.ru/cgi-bin/new-client?SID=1d0b6fa9df21a100&action=139&prob_id=7
+
 
 #include <bits/stdc++.h>
 #include <iostream>
