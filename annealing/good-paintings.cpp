@@ -1,3 +1,4 @@
+// task - https://codeforces.com/gym/102936/problem/7
 #include <bits/stdc++.h>
 #include <ext/rope>
 
