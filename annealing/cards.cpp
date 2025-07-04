@@ -47,7 +47,7 @@ int annealing(int n, vector<Card> &cards) {
     best_res = cur_res = calc(p, cards);
     double T = 1;
     double num = 10'000;
-    int up = 7000;
+    int up = 6000;
     for (int _ = 0; _ < up; ++_) {
         int i = rnd() % n, j = rnd() % n;
         while (n != 1 && i == j) {
