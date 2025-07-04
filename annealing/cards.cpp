@@ -1,3 +1,4 @@
+// task - https://codeforces.com/contest/745/problem/E
 #pragma GCC optimize("Ofast,unroll-loops,no-stack-protector")
 
 #include <bits/stdc++.h>
@@ -67,7 +68,7 @@ int annealing(int n, vector<Card> &cards) {
                 swap(p[i], p[j]);
             }
         }
-        T *= 0.99;
+        T *= 0.999;
     }
 
     return best_res;
