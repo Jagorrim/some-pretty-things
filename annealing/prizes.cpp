@@ -1,3 +1,4 @@
+// task - https://informatics.msk.ru/mod/statements/view.php?id=1975&chapterid=486#1
 #include <bits/stdc++.h>
 
 
