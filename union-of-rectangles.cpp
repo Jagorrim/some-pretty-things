@@ -26,8 +26,7 @@ int pow2(int power) {
 
 //const int sg_base = 8;
 const ll sg_base = 2147483648;
-const int sg_size = 5e6;
-int cur = 1;
+
 struct SG {
 	struct Node {
 		ll l, r, min_count = 0;
@@ -36,7 +35,7 @@ struct SG {
 
 		Node() {}
 		Node(ll l, ll r, int min, ll min_count, int pos) :l(l), r(r), min(min), min_count(min_count), pos(pos) {}
-	} sg[sg_size];
+	};
 
 	Node merge(Node f, Node s) {
 		Node res;
@@ -58,19 +57,19 @@ struct SG {
 		return res;
 	}
 
+	vector<Node> sg;
 	void add_c(int pos) {
 		ll mid = (sg[pos].l + sg[pos].r) / 2;
 		if (sg[pos].lc == -1) {
-			sg[pos].lc = cur;
-			sg[cur] = Node(sg[pos].l, mid, 0, sg[pos].min_count / (ll)2, cur);
-			++cur;
-			sg[pos].rc = cur;
-			sg[cur] = Node(mid, sg[pos].r, 0, sg[pos].min_count / (ll)2, cur);
-			++cur;
+			sg[pos].lc = sg.size();
+			sg.emplace_back(sg[pos].l, mid, 0, sg[pos].min_count / (ll)2, sg.size());
+			sg[pos].rc = sg.size();
+			sg.emplace_back(mid, sg[pos].r, 0, sg[pos].min_count / (ll)2, sg.size());
 		}
 	}
 	void build() {
-		sg[0] = Node( 0, sg_base, 0, sg_base, 0 );
+		sg.reserve(5e6);
+		sg.emplace_back(0, sg_base, 0, sg_base, 0);
 	}
 
 	void push(int pos) {
@@ -78,6 +77,7 @@ struct SG {
 		sg[sg[pos].rc].min += sg[pos].push;
 		sg[sg[pos].lc].push += sg[pos].push;
 		sg[sg[pos].rc].push += sg[pos].push;
+                sg[pos].push=0;
 	}
 
 	void add(int pos, ll l, ll r, int x) {
